@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/delete")
 public class DeletingUserServlet extends HttpServlet {
@@ -18,10 +19,11 @@ public class DeletingUserServlet extends HttpServlet {
         try {
             UserService userService = new UserService();
 
-            String login = request.getParameter("login");
-            String password = request.getParameter("password");
-            userService.deleteUser(login, password);
-            response.sendRedirect("/index.jsp");
+            //порядок параметров userParam: id, login, name, password
+            //типобезопасно ли то, что я внизу творю?
+            List<Object> userParam = (List<Object>) request.getAttribute("user");
+            userService.deleteUser( (String) userParam.get(1), (String) userParam.get(3));
+            response.sendRedirect("/start");
 
             response.setStatus(HttpServletResponse.SC_OK);
         } catch (DBException e) {
