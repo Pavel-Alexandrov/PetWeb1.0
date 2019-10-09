@@ -19,20 +19,11 @@ public class UserService {
 
     //формирует List<List<Object>> где List<Object> содержит все данные юзера, по порядку
     //сделано, чтобы jstl мог итерироваться по внутреннему и внешнему листам, создавая таблицу
-    public List<List<Object>> getAllUsers() throws DBException {
+    public List<User> getAllUsers() throws DBException {
         UserDAO userDAO = getUserDAO();
         try {
             List<User> userList = userDAO.getAllUsers();
-            List<List<Object>> result = new ArrayList<>();
-            for (User user: userList) {
-                List<Object> objectList = new ArrayList<>();
-                objectList.add(user.getId());
-                objectList.add(user.getLogin());
-                objectList.add(user.getName());
-                objectList.add(user.getPassword());
-                result.add(objectList);
-            }
-            return result;
+            return userList;
         } catch (SQLException e) {
             throw new DBException(e);
         }
@@ -64,10 +55,10 @@ public class UserService {
         }
     }
 
-    public void deleteUser(String login, String password) throws DBException {
+    public void deleteUser(Integer id) throws DBException {
         UserDAO userDAO = getUserDAO();
         try {
-            userDAO.deleteUser(login, password);
+            userDAO.deleteUser(id);
         } catch (SQLException e) {
             throw new DBException(e);
         }

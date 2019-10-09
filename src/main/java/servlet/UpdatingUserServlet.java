@@ -22,7 +22,7 @@ public class UpdatingUserServlet extends HttpServlet {
             String name = request.getParameter("name");
             String password = request.getParameter("password");
             userService.updateUser(name, login, password);
-            response.sendRedirect("/index.jsp");
+            response.sendRedirect("/start");
 
             response.setStatus(HttpServletResponse.SC_OK);
         } catch (DBException e) {

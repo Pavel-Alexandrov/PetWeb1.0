@@ -19,10 +19,8 @@ public class DeletingUserServlet extends HttpServlet {
         try {
             UserService userService = new UserService();
 
-            //порядок параметров userParam: id, login, name, password
-            //типобезопасно ли то, что я внизу творю?
-            List<Object> userParam = (List<Object>) request.getAttribute("user");
-            userService.deleteUser( (String) userParam.get(1), (String) userParam.get(3));
+            Integer id = Integer.valueOf(request.getParameter("id"));
+            userService.deleteUser(id);
             response.sendRedirect("/start");
 
             response.setStatus(HttpServletResponse.SC_OK);

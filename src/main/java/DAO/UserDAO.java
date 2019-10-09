@@ -66,11 +66,10 @@ public class UserDAO {
         preparedStatement.close();
     }
 
-    public void deleteUser(String login, String password) throws SQLException {
-        String update = "DELETE FROM Users WHERE login = ? AND password = ?";
+    public void deleteUser(Integer id) throws SQLException {
+        String update = "DELETE FROM Users WHERE id = ?";
         PreparedStatement preparedStatement = connection.prepareStatement(update);
-        preparedStatement.setString(1, login);
-        preparedStatement.setString(2, password);
+        preparedStatement.setInt(1, id);
         preparedStatement.executeUpdate();
         preparedStatement.close();
     }

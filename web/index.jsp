@@ -33,27 +33,43 @@
         <td>login</td>
         <td>name</td>
         <td>password</td>
+        <td>Эксклюзивные возможности</td>
     </tr>
   <c:forEach var="user" items="${userList}">
     <tr>
-      <c:forEach var="userParam" items="${user}">
+      <td>
+          <c:out value="${user.id}"/>
+      </td>
         <td>
-            <c:out value="${userParam}"/>
+            <c:out value="${user.login}"/>
         </td>
-      </c:forEach>
+        <td>
+            <c:out value="${user.name}"/>
+        </td>
+        <td>
+            <c:out value="${user.password}"/>
+        </td>
         <td>
             <form action="/delete" method="post">
-                <button name="user" value="${user}">Удалить пользователя</button>
+                <button name="id" value="${user.id}">Удалить пользователя</button>
             </form>
             <form action="/update" method="post">
-                <button name="user" value="${user}">Изменить пользователя</button>
+                <p><input type="submit" value="Изменить пользователя:"></p>
+                <p>Name: <input type="text" name="name"> Password: <input type="text" name="password"></p>
+                <input type="hidden" name="login" value="${user.login}">
             </form>
         </td>
     </tr>
   </c:forEach>
 </table>
-<form>
-    <button>Добавить нового пользователя</button>
+<form action="/add" method="post">
+    <p>Login:</p>
+    <p><input type="text" name="login"></p>
+    <p>Name:</p>
+    <p><input type="text" name="name"></p>
+    <p>Password:</p>
+    <p><input type="text" name="password"></p>
+    <p><input type="submit"></p>
 </form>
 </body>
 </html>
