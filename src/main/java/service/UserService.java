@@ -1,13 +1,13 @@
 package service;
 
-import DAO.UserDAO;
+import DAO.UserDao;
 import exception.DBException;
+import exception.StatementException;
 import model.User;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserService {
@@ -17,68 +17,66 @@ public class UserService {
         this.connection = getMySQLConnection();
     }
 
-    //формирует List<List<Object>> где List<Object> содержит все данные юзера, по порядку
-    //сделано, чтобы jstl мог итерироваться по внутреннему и внешнему листам, создавая таблицу
     public List<User> getAllUsers() throws DBException {
-        UserDAO userDAO = getUserDAO();
+        UserDao userDAO = getUserDAO();
         try {
             List<User> userList = userDAO.getAllUsers();
             return userList;
-        } catch (SQLException e) {
-            throw new DBException(e);
+        } catch (StatementException se) {
+            throw new DBException(se);
         }
     }
 
     //сперва проверяет наличие юзера в базе по логину
     //если нет, то добавляет, иначе ничего не делает
     public void addUser(String name, String login, String password) throws DBException {
-        UserDAO userDAO = getUserDAO();
+        UserDao userDAO = getUserDAO();
         try {
             if (!userDAO.checkUser(login)) {
                 userDAO.addUser(name, login, password);
             }
-        } catch (SQLException e) {
-            throw new DBException(e);
+        } catch (StatementException se) {
+            throw new DBException(se);
         }
     }
 
     //сперва проверяет наличие юзера в базе по логину
     //если есть, меняет данные, иначе ничего не делает
     public void updateUser(String name, String login, String password) throws DBException {
-        UserDAO userDAO = getUserDAO();
+        UserDao userDAO = getUserDAO();
         try {
             if (userDAO.checkUser(login)) {
                 userDAO.updateUser(name, login, password);
             }
-        } catch (SQLException e) {
-            throw new DBException(e);
+        } catch (StatementException se) {
+            throw new DBException(se);
         }
     }
 
     public void deleteUser(Integer id) throws DBException {
-        UserDAO userDAO = getUserDAO();
+        UserDao userDAO = getUserDAO();
         try {
             userDAO.deleteUser(id);
-        } catch (SQLException e) {
-            throw new DBException(e);
+        } catch (StatementException se) {
+            throw new DBException(se);
         }
     }
 
     public void createTable() throws DBException {
-        UserDAO userDAO = getUserDAO();
+        UserDao userDAO = getUserDAO();
         try {
             userDAO.createTable();
-        } catch (SQLException e) {
-            throw new DBException(e);
+        } catch (StatementException se) {
+            throw new DBException(se);
         }
     }
 
     public void cleanUp() throws DBException {
-        UserDAO userDAO = getUserDAO();
+        UserDao userDAO = getUserDAO();
         try {
             userDAO.dropTable();
-        } catch (SQLException e) {
-            throw new DBException(e);
+        } catch (StatementException se) {
+            throw new DBException(se);
         }
     }
 
@@ -93,7 +91,7 @@ public class UserService {
         }
     }
 
-    private UserDAO getUserDAO() {
-        return new UserDAO(connection);
+    private UserDao getUserDAO() {
+        return UserDao.getInstance(connection);
     }
 }
