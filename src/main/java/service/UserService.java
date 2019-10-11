@@ -4,18 +4,17 @@ import DAO.UserDao;
 import exception.DBException;
 import exception.StatementException;
 import model.User;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.List;
 
 public class UserService {
+
+    /* код для установления SQL соединения
     private final Connection connection;
 
     public UserService() {
-        this.connection = getMySQLConnection();
+        this.connection = DBHelper.getMySQLConnection();
     }
+     */
 
     public List<User> getAllUsers() throws DBException {
         UserDao userDAO = getUserDAO();
@@ -80,18 +79,7 @@ public class UserService {
         }
     }
 
-    private static Connection getMySQLConnection() {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb?user=root&password=root&serverTimezone=UTC");
-            return connection;
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-            throw new IllegalStateException();
-        }
-    }
-
     private UserDao getUserDAO() {
-        return UserDao.getInstance(connection);
+        return UserDao.getInstance();
     }
 }

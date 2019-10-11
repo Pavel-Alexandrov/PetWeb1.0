@@ -97,7 +97,6 @@ public class UserJDBCDAO implements UserDao{
         }
     }
 
-    @Override
     public void createTable() throws StatementException {
         try {
         String update = "CREATE TABLE if NOT EXISTS Users (id int auto_increment, name varchar(256), login varchar(256) unique, password varchar(256), primary key(id))";
