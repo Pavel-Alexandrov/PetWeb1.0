@@ -7,6 +7,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +33,9 @@ public class User implements Serializable {
         this.name = name;
         this.login = login;
         this.password = password;
+    }
+
+    private User() {
     }
 
     public int getId() {

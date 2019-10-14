@@ -6,7 +6,7 @@ import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 import util.DBHelper;
 
-import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.swing.table.TableRowSorter;
 import java.util.List;
 import java.util.Queue;
@@ -59,7 +59,13 @@ public class UserHQLDAO implements UserDao {
         try {
             Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
-            Query query = session.createQuery("UPDATE User u SET u.name = :name, u.password = :password where u.login = :login")
+            Query query = session.createQuery("UPDATE User u SET u.name = :name, u.password = :password where u.login = :login");
+            query.setParameter("name", name);
+            query.setParameter("password", password);
+            query.setParameter("login", login);
+            query.executeUpdate();
+            transaction.commit();
+            session.close();
         } catch (HibernateException he) {
             throw new StatementException(he);
         }

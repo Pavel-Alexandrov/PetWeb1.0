@@ -61,15 +61,6 @@ public class UserService {
         }
     }
 
-    public void createTable() throws DBException {
-        UserDao userDAO = getUserDAO();
-        try {
-            userDAO.createTable();
-        } catch (StatementException se) {
-            throw new DBException(se);
-        }
-    }
-
     public void cleanUp() throws DBException {
         UserDao userDAO = getUserDAO();
         try {

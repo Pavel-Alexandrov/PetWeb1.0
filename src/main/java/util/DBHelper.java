@@ -1,5 +1,6 @@
 package util;
 
+import model.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
@@ -43,6 +44,7 @@ public class DBHelper {
         configuration.setProperty("hibernate.show_sql", "true");
         configuration.setProperty("hibernate.hbm2ddl.auto", "update");
         configuration.addAnnotatedClass(UserService.class);
+        configuration.addAnnotatedClass(User.class);
         return configuration;
     }
 
